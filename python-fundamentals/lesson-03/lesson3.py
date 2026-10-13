@@ -8,7 +8,8 @@ device = {
     "vendor": "cisco",
     "device_type": "router",
     "ios_version": "17.9.4",
-    "status": "UP"
+    "status": "UP",
+    "cpu_usage": 37.5
 
 }
 
@@ -18,16 +19,33 @@ device2 ={
     "vendor": "cisco",
     "device_type": "switch",
     "ios_version": "17.12.4",
-    "status": "DOWN"
+    "status": "DOWN",
+    "cpu_usage": 80.5
     }
 
-devices =[device, device2]
+devices = [device, device2]
+
+down_count = 0
 
 for device in devices:
-    if device["status"] == "UP":
-        print(f"{device['hostname']} | {device['ip_address']} | {device['vendor']} | {device['status']}") 
+    if device["status"] == "DOWN":
+        down_count = down_count + 1
+        print(f"{device["hostname"]} | {device["status"]} | DEVICE DOWN")
+
+    elif device["cpu_usage"] < 70:
+        print(f"{device['hostname']} | {device['status']} | CPU NORMAL")
     else:
-        print(f"{device['hostname']} | {device['ip_address']} | {device['vendor']} | DOWN - CHECK DEVICE ")
+        print(f"{device['hostname']} | {device['status']} | HIGH CPU")
+
+print (f"DEVICES DOWN: {down_count}")
+
+    
+
+
+        
+             
+
+
 
 
 
